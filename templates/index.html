@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <title>Flask CRUD App</title>
+</head>
+<body>
+    <h1>Task List</h1>
+    <form action="{{ url_for('create') }}" method="post">
+        <input type="text" name="title" placeholder="Title" required>
+        <input type="text" name="description" placeholder="Description" required>
+        <button type="submit">Add Task</button>
+    </form>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <form action="{{ url_for('update', task_id=task.id) }}" method="post">
+                <input type="text" name="title" value="{{ task.title }}" required>
+                <input type="text" name="description" value="{{ task.description }}" required>
+                <input type="checkbox" name="done" {% if task.done %}checked{% endif %}>
+                <button type="submit">Update</button>
+            </form>
+            <a href="{{ url_for('delete', task_id=task.id) }}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
